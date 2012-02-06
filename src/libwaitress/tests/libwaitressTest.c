@@ -132,12 +132,6 @@ void TestWaitress(CuTest* tc) {
 
 
 
-
-
-/*-------------------------------------------------------------------------*
- * main
- *-------------------------------------------------------------------------*/
-
 CuSuite* CuGetSuite(void)
 {
 	CuSuite* suite = CuSuiteNew();
@@ -147,3 +141,28 @@ CuSuite* CuGetSuite(void)
 	return suite;
 }
 
+
+void RunAllTests(void) 
+{
+    CuString *output = CuStringNew();
+    CuSuite* suite = CuSuiteNew();
+
+    SUITE_ADD_TEST(suite, TestWaitress);
+
+    CuSuiteRun(suite);
+    CuSuiteSummary(suite, output);
+    CuSuiteDetails(suite, output);
+    printf("%s\n", output->buffer);
+    CuStringDelete(output);
+    CuSuiteDelete(suite);
+}
+
+
+/*-------------------------------------------------------------------------*
+ * main
+ *-------------------------------------------------------------------------*/
+int main(void)
+{
+    RunAllTests();
+    return 0;
+}

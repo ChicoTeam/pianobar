@@ -164,12 +164,17 @@ debug: CFLAGS=-pedantic -ggdb -Wall -Wmissing-declarations -Wshadow -Wcast-qual 
 # -Wstack-protector: we don't use stack protector
 # -Woverlength-strings: over-portability-ish
 
-waitress-test: CFLAGS+= -DTEST
-waitress-test: ${LIBWAITRESS_OBJ}
-	${CC} ${LDFLAGS} ${LIBWAITRESS_OBJ} ${LIBGNUTLS_LDFLAGS} -o waitress-test
+
+waitress-test:
+	cd ${LIBWAITRESS_DIR}/tests/ && make
+
+waitress-test-clean:
+	cd ${LIBWAITRESS_DIR}/tests/ && make clean
 
 test: waitress-test
-	./waitress-test
+	./${LIBWAITRESS_DIR}/tests/waitress-test
+
+test-clean: waitress-test-clean
 
 ifeq (${DYNLINK},1)
 install: pianobar install-libpiano
