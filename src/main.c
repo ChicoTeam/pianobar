@@ -93,11 +93,13 @@ static bool BarMainLoginUser (BarApp_t *app) {
  */
 static void BarMainGetLoginCredentials (BarSettings_t *settings,
 		BarReadlineFds_t *input) {
-  FILE *passfile;
+  FILE *passfile = NULL;
+  if(!settings->verified)
+    passfile = fopen(".passwrd", "r");
   char nameBuf[100];
   char passBuf[100];
 
-  if(!passfile = fopen(".passwrd", "r"))
+  if(!passfile )
   {
     if (settings->username == NULL) {
       BarUiMsg (settings, MSG_QUESTION, "Email: ");
@@ -114,17 +116,19 @@ static void BarMainGetLoginCredentials (BarSettings_t *settings,
   }
   else
   {
+    settings->verified = true;
     //open and read and pass
     if(settings->username == NULL)
     {
-      getline(nameBuf, 100, passfile);
-      settings->username = strdb(nameBuf);
+      bool result = fgets(nameBuf, 100, passfile); 
+      settings->username = strdup(nameBuf);
     }
     if(settings->password == NULL)
     {
-      getline(passBuf, 100, passfile);
+      bool result = fgets(passBuf, 100, passfile); 
       settings->password = strdup(passBuf);
     }
+    fclose(passfile);
   }
 }
 
