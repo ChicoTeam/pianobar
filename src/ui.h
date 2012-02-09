@@ -38,10 +38,8 @@ typedef void (*BarUiSelectStationCallback_t) (BarApp_t *app, char *buf);
 void BarUiMsg (const BarSettings_t *, const BarUiMsg_t, const char *, ...);
 PianoStation_t *BarUiSelectStation (BarApp_t *, PianoStation_t *, const char *,
 		BarUiSelectStationCallback_t);
-
 PianoSong_t *BarUiSelectSong (const BarSettings_t *, PianoSong_t *,
 		BarReadlineFds_t *);
-
 PianoArtist_t *BarUiSelectArtist (BarApp_t *, PianoArtist_t *);
 char *BarUiSelectMusicId (BarApp_t *, PianoStation_t *, PianoSong_t *, const char *);
 void BarStationFromGenre (BarApp_t *);

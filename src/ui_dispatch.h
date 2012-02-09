@@ -43,15 +43,12 @@ typedef struct {
 	BarUiDispatchContext_t context;
 	BarKeyShortcutFunc_t function;
 	const char * const helpText;
-const char * const configKey
+	const char * const configKey;
 } BarUiDispatchAction_t;
 
 #include "ui_act.h"
 
-//where is BAR_KS_COUNT declared
-
 /* see settings.h */
-// also see below for the BarKeyShortcutFunc_t overloaded function.
 static const BarUiDispatchAction_t dispatchActions[BAR_KS_COUNT] = {
 		{'?', BAR_DC_UNDEFINED, BarUiActHelp, NULL, "act_help"},
 		{'+', BAR_DC_SONG, BarUiActLoveSong, "love song",
@@ -104,8 +101,6 @@ static const BarUiDispatchAction_t dispatchActions[BAR_KS_COUNT] = {
 #include <stdbool.h>
 #include <stdio.h>
 
-
-// overloaded function, 
 BarKeyShortcutId_t BarUiDispatch (BarApp_t *, const char, PianoStation_t *, PianoSong_t *,
 		const bool, BarUiDispatchContext_t);
 

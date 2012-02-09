@@ -35,7 +35,7 @@ typedef struct {
 	PianoHandle_t ph;
 	WaitressHandle_t waith;
 	struct audioPlayer player;
-	BarSettings_t settings;	
+	BarSettings_t settings;
 	/* first item is current song */
 	PianoSong_t *playlist;
 	PianoSong_t *songHistory;
