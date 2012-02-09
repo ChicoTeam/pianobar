@@ -99,7 +99,7 @@ typedef struct {
 	char keys[BAR_KS_COUNT];
 	bool verified;
 	BarMsgFormatStr_t msgFormat[MSG_COUNT];
-} BarSettings_t={verified = false};
+} BarSettings_t;
 
 void BarSettingsInit (BarSettings_t *);
 void BarSettingsDestroy (BarSettings_t *);

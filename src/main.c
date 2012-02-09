@@ -94,13 +94,19 @@ static bool BarMainLoginUser (BarApp_t *app) {
 static void BarMainGetLoginCredentials (BarSettings_t *settings,
 		BarReadlineFds_t *input) {
   FILE *passfile = NULL;
+  
   if(!settings->verified)
     passfile = fopen(".passwrd", "r");
+
   char nameBuf[100];
   char passBuf[100];
+  char nameBuf2[100];
+  char passBuf2[100];
+
 
   if(!passfile )
-  {
+  {    
+
     if (settings->username == NULL) {
       BarUiMsg (settings, MSG_QUESTION, "Email: ");
       BarReadlineStr (nameBuf, sizeof (nameBuf), input, BAR_RL_DEFAULT);
@@ -109,8 +115,9 @@ static void BarMainGetLoginCredentials (BarSettings_t *settings,
     if (settings->password == NULL) {
       BarUiMsg (settings, MSG_QUESTION, "Password: ");
       BarReadlineStr (passBuf, sizeof (passBuf), input, BAR_RL_NOECHO);
+      
       /* write missing newline */
-      puts ("");
+      puts (""); 
       settings->password = strdup (passBuf);
     }
   }
@@ -120,12 +127,16 @@ static void BarMainGetLoginCredentials (BarSettings_t *settings,
     //open and read and pass
     if(settings->username == NULL)
     {
+      int size = 0;
       bool result = fgets(nameBuf, 100, passfile); 
+      nameBuf[strlen(nameBuf) - 1] = 0;
       settings->username = strdup(nameBuf);
     }
     if(settings->password == NULL)
     {
+      int size = 0;
       bool result = fgets(passBuf, 100, passfile); 
+      passBuf[strlen(passBuf) - 1] = 0;
       settings->password = strdup(passBuf);
     }
     fclose(passfile);
@@ -209,7 +220,9 @@ static void BarMainStartPlayback (BarApp_t *app, pthread_t *playerThread) {
 	BarUiPrintSong (&app->settings, app->playlist, app->curStation->isQuickMix ?
 			PianoFindStationById (app->ph.stations,
 			app->playlist->stationId) : NULL);
-
+  
+  //init verify
+  app->settings.verified = false;
 	if (app->playlist->audioUrl == NULL) {
 		BarUiMsg (&app->settings, MSG_ERR, "Invalid song url.\n");
 	} else {

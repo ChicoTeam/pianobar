@@ -43,7 +43,7 @@ typedef struct {
 	BarUiDispatchContext_t context;
 	BarKeyShortcutFunc_t function;
 	const char * const helpText;
-const char * const configKey
+const char * const configKey;
 } BarUiDispatchAction_t;
 
 #include "ui_act.h"
