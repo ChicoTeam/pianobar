@@ -93,20 +93,39 @@ static bool BarMainLoginUser (BarApp_t *app) {
  */
 static void BarMainGetLoginCredentials (BarSettings_t *settings,
 		BarReadlineFds_t *input) {
-	if (settings->username == NULL) {
-		char nameBuf[100];
-		BarUiMsg (settings, MSG_QUESTION, "Email: ");
-		BarReadlineStr (nameBuf, sizeof (nameBuf), input, BAR_RL_DEFAULT);
-		settings->username = strdup (nameBuf);
-	}
-	if (settings->password == NULL) {
-		char passBuf[100];
-		BarUiMsg (settings, MSG_QUESTION, "Password: ");
-		BarReadlineStr (passBuf, sizeof (passBuf), input, BAR_RL_NOECHO);
-		/* write missing newline */
-		puts ("");
-		settings->password = strdup (passBuf);
-	}
+  FILE *passfile;
+  char nameBuf[100];
+  char passBuf[100];
+
+  if(!passfile = fopen(".passwrd", "r"))
+  {
+    if (settings->username == NULL) {
+      BarUiMsg (settings, MSG_QUESTION, "Email: ");
+      BarReadlineStr (nameBuf, sizeof (nameBuf), input, BAR_RL_DEFAULT);
+      settings->username = strdup (nameBuf);
+    }
+    if (settings->password == NULL) {
+      BarUiMsg (settings, MSG_QUESTION, "Password: ");
+      BarReadlineStr (passBuf, sizeof (passBuf), input, BAR_RL_NOECHO);
+      /* write missing newline */
+      puts ("");
+      settings->password = strdup (passBuf);
+    }
+  }
+  else
+  {
+    //open and read and pass
+    if(settings->username == NULL)
+    {
+      getline(nameBuf, 100, passfile);
+      settings->username = strdb(nameBuf);
+    }
+    if(settings->password == NULL)
+    {
+      getline(passBuf, 100, passfile);
+      settings->password = strdup(passBuf);
+    }
+  }
 }
 
 /*	get station list
@@ -344,6 +363,7 @@ int main (int argc, char **argv) {
 
 	BarSettingsInit (&app.settings);
 	BarSettingsRead (&app.settings);
+  
 
 	BarUiMsg (&app.settings, MSG_NONE,
 			"Welcome to " PACKAGE " (" VERSION ")! ");
