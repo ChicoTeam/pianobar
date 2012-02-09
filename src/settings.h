@@ -97,8 +97,9 @@ typedef struct {
 	char *fifo;
 	char tlsFingerprint[20];
 	char keys[BAR_KS_COUNT];
+	bool verified;
 	BarMsgFormatStr_t msgFormat[MSG_COUNT];
-} BarSettings_t;
+} BarSettings_t={verified = false};
 
 void BarSettingsInit (BarSettings_t *);
 void BarSettingsDestroy (BarSettings_t *);
