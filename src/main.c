@@ -121,22 +121,22 @@ static void BarMainGetLoginCredentials (BarSettings_t *settings,
       settings->password = strdup (passBuf);
     }
   }
-  else
+  else//get login info from file
   {
-    settings->verified = true;
+    settings->verified = true;//locks file from being opened repeatedly
     //open and read and pass
     if(settings->username == NULL)
     {
       int size = 0;
-      bool result = fgets(nameBuf, 100, passfile); 
-      nameBuf[strlen(nameBuf) - 1] = 0;
+      bool result = fgets(nameBuf, 100, passfile); //store result for furture use if needed
+      nameBuf[strlen(nameBuf) - 1] = 0;//remove trailing newline from fgets
       settings->username = strdup(nameBuf);
     }
     if(settings->password == NULL)
     {
       int size = 0;
-      bool result = fgets(passBuf, 100, passfile); 
-      passBuf[strlen(passBuf) - 1] = 0;
+      bool result = fgets(passBuf, 100, passfile); //store result for future use if needed
+      passBuf[strlen(passBuf) - 1] = 0;//remove trailing newline from fgets
       settings->password = strdup(passBuf);
     }
     fclose(passfile);
